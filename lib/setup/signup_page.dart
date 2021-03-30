@@ -1,8 +1,6 @@
 import 'package:firebaseauthentification/pages/home.dart';
-import 'package:firebaseauthentification/setup/login.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 FirebaseAuth _auth = FirebaseAuth.instance;
@@ -26,12 +24,14 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xFFE1F5FE),
+        // sign up page app bar
         appBar: AppBar(title: Text("Sign up")),
         body: SingleChildScrollView(
           child: Align(
             child: Column(children: <Widget>[
               Padding(padding: EdgeInsets.only(top: 100)),
               Padding(padding: EdgeInsets.only(top: 30)),
+              // welcome message
               Text(
                 "Welcome to Break out room 2 Application",
                 style: GoogleFonts.ptSans(
@@ -58,6 +58,7 @@ class _SignUpState extends State<SignUp> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
+                        // creating login textform fields
                         Padding(
                           padding: EdgeInsets.only(top: 20.0),
                           child: TextFormField(
@@ -75,6 +76,7 @@ class _SignUpState extends State<SignUp> {
                                 fontSize: 12,
                               ),
                             ),
+                            // if name input field is empty, message prompt is returned
                             validator: (value) {
                               if (value.isEmpty) {
                                 return "Please enter your Name here";
@@ -101,6 +103,7 @@ class _SignUpState extends State<SignUp> {
                               ),
                             ),
                             validator: (value) {
+                              // if email input field is left empty, message prompt is returned
                               if (value.isEmpty) {
                                 return 'Mandatory Field!, Enter an Email Address';
                               } else if (!value.contains('@')) {
@@ -132,6 +135,7 @@ class _SignUpState extends State<SignUp> {
                               ),
                             ),
                             validator: (value) {
+                              // if password input field is left empty, message prompt is returned
                               if (value.isEmpty) {
                                 return 'Mandatory Field, Enter Password';
                               } else if (value.length < 8) {
@@ -162,6 +166,7 @@ class _SignUpState extends State<SignUp> {
                                 fontSize: 12,
                               ),
                             ),
+                            //checking whether the two passwords match
                             validator: (value) {
                               if (value.isEmpty) {
                                 return 'Please confirm your password';
@@ -190,6 +195,7 @@ class _SignUpState extends State<SignUp> {
                                         setState(() {
                                           isLoading = true;
                                         });
+                                        // calling _signupandsave() 
                                         _signupandsave();
                                       }
                                     },
@@ -214,7 +220,10 @@ class _SignUpState extends State<SignUp> {
   }
 
 // Create account witht he details provided
+
+// Create account with the details provided 
   Future registerToFb(String email, String name, String password) async {
+    //creating user in Firebase database
     try {
       UserCredential results = await _auth.createUserWithEmailAndPassword( // send the email and password to firebase 
           email: email, password: password);
@@ -241,7 +250,8 @@ class _SignUpState extends State<SignUp> {
     dynamic result = await registerToFb(
         emailController.text, nameController.text, passwordController.text);
     var user = FirebaseAuth.instance.currentUser;
-
+    
+    // printing success message if sucessful
     if (result == true) {
       print("Successfully Signed Up");
       Navigator.push(
@@ -251,7 +261,10 @@ class _SignUpState extends State<SignUp> {
                     userid: user.uid,
                   )));
 
-    } else { // this clause will run is an error is thrown by firebase, eg if a user email already exists. 
+   // this clause will run is an error is thrown by firebase, eg if a user email already exists. 
+      //TO DO add uid
+      // if it fails, print error message
+    } else {
       showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -279,3 +292,4 @@ class _SignUpState extends State<SignUp> {
     }
   }
 }
+
