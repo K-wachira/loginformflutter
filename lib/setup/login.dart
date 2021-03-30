@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebaseauthentification/pages/home.dart';
 import 'package:flutter/material.dart';
 
+
 class LogIn extends StatefulWidget {
   @override
   _LogInState createState() => _LogInState();
@@ -85,13 +86,13 @@ class _LogInState extends State<LogIn> {
 
   void _loginandsave() async {
     print("Home");
-    dynamic result = await loginwithEmailandpass(
+    dynamic result = await loginwithEmailandpass( 
         emailController.text, passwordController.text);
-    var user = await FirebaseAuth.instance.currentUser;
+    var user = await FirebaseAuth.instance.currentUser; // confirms if the user is on the db already
     print(user.uid);
 
     print(result);
-    if (result == true) {
+    if (result == true) { // is user is in db it returns true and redirects to the home page ith the id as param
       print("Logged in successfully!");
       Navigator.push(
           context,
@@ -99,7 +100,7 @@ class _LogInState extends State<LogIn> {
               builder: (context) => HomePage(
                     userid: user.uid,
                   )));
-    } else {
+    } else { // if use does not exist or password is wrong, it pops out an error
       showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -120,7 +121,7 @@ class _LogInState extends State<LogIn> {
     }
   }
 
-  Future loginwithEmailandpass(String email, String password) async {
+  Future loginwithEmailandpass(String email, String password) async { // returnss a future boolean of if the user is in db 
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);

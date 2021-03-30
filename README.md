@@ -1,8 +1,23 @@
 # firebaseauthentification
 
-A new Flutter project.
+## Week 9,10 & 11 Class Activit
+### By:Room2
+
+# A new Flutter project Consisting of 
+# Login and signup by firebase lambda
+# Fetching of unique user ID 
+# Using packages to build the application 
+# widget testing practice 
+
+
+## BY: 
+# Ian Wanjohi
+# Kelvin Wachira
+# Nancy Umutoni
 
 ## Getting Started
+
+
 
 This project is a starting point for a Flutter application.
 

@@ -213,11 +213,10 @@ class _SignUpState extends State<SignUp> {
         ));
   }
 
-
-// Create account witht he details provided 
+// Create account witht he details provided
   Future registerToFb(String email, String name, String password) async {
     try {
-      UserCredential results = await _auth.createUserWithEmailAndPassword(
+      UserCredential results = await _auth.createUserWithEmailAndPassword( // send the email and password to firebase 
           email: email, password: password);
       final User user = results.user;
       return true;
@@ -226,7 +225,7 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
-  void _togglePasswordView() {
+  void _togglePasswordView() { // hide or display the user password at choice 
     setState(() {
       _isHidden = !_isHidden;
     });
@@ -252,14 +251,13 @@ class _SignUpState extends State<SignUp> {
                     userid: user.uid,
                   )));
 
-      //TO DO add uid
-    } else {
+    } else { // this clause will run is an error is thrown by firebase, eg if a user email already exists. 
       showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text("Error"),
-              content: Text(result.toString()),
+              content: Text(result.toString() + " Use different EMail"),
               actions: [
                 ElevatedButton(
                   child: Text("Ok"),
